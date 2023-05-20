@@ -4,6 +4,8 @@ import * as vscode from 'vscode';
 import * as fs from "fs";
 import Helpers from "./helpers";
 import RouteProvider from "./RouteProvider";
+import ConfigProvider from "./ConfigProvider";
+import ValidationProvider from './ValidationProvider';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -19,9 +21,17 @@ export function activate(context: vscode.ExtensionContext) {
 				{ scheme: 'file', language: 'vue' },
 				{ scheme: 'file', language: 'javascript' },
 			];
+
+			const PHP_ONLY = [
+				{scheme: 'file', language: 'php'}
+			];
+
 			const TRIGGER_CHARACTERS = "\"'".split("");
 
 			context.subscriptions.push(vscode.languages.registerCompletionItemProvider(LANGUAGES, new RouteProvider, ...TRIGGER_CHARACTERS));
+			context.subscriptions.push(vscode.languages.registerCompletionItemProvider(LANGUAGES, new ConfigProvider, ...TRIGGER_CHARACTERS));
+
+			context.subscriptions.push(vscode.languages.registerCompletionItemProvider(PHP_ONLY, new ValidationProvider, ...TRIGGER_CHARACTERS));
 		}
 	}
 	console.log('Congratulations, your extension "laravel-route" is now active!');
