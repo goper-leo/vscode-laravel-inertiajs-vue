@@ -41,13 +41,6 @@ export default class TranslationProvider
             return out;
         }
 
-        console.log(
-            'func',
-            Helpers.tags.trans.functions.some((fn: string) =>
-                func.function.includes(fn),
-            ),
-        );
-
         if (
             func &&
             ((func.class &&

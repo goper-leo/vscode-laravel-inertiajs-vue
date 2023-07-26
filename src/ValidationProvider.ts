@@ -100,7 +100,11 @@ export default class ValidationProvider
                 )) ||
             document
                 .getText()
-                .match(/use Illuminate\\Support\\Facades\\Validator;/g)
+                .match(/use Illuminate\\Support\\Facades\\Validator;/g) ||
+            document
+                .getText()
+                .match(/use Lorisleiva\\Actions\\ActionRequest;/g) ||
+            document.getText().match(/namespace App\\Actions\\Prospect;/g)
         ) {
             var rules = this.rules;
             Object.assign(
