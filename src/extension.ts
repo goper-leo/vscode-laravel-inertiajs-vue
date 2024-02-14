@@ -16,10 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
         if (fs.existsSync(Helpers.projectPath('artisan'))) {
             if (Helpers.outputChannel === null) {
                 Helpers.outputChannel = vscode.window.createOutputChannel(
-                    'Laravel Extra Intellisense',
+                    'Laravel-Inertia-Vue Intellisense',
                 );
                 Helpers.outputChannel.appendLine(
-                    'Laravel Extra Intellisense Started...',
+                    'Laravel-Inertia-Vue Intellisense Started...',
                 );
             }
 
@@ -66,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
     console.log(
-        'Congratulations, your extension "laravel-route" is now active!',
+        'Congratulations, your extension "laravel-inertia-vue" is now active!',
     );
 
     // The command has been defined in the package.json file

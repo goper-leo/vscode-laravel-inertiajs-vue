@@ -3,7 +3,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import Helpers from './helpers';
-import { log } from 'console';
 
 export default class TranslationProvider
     implements vscode.CompletionItemProvider
@@ -19,7 +18,7 @@ export default class TranslationProvider
             this.watcher = vscode.workspace.createFileSystemWatcher(
                 new vscode.RelativePattern(
                     vscode.workspace.workspaceFolders[0],
-                    '{,**/}{lang,localization,localizations,trans,translation,translations}/{*,**/*}',
+                    '{,**/}{lang,localization,localizations,trans,translation,translations,$t}/{*,**/*}',
                 ),
             );
             this.watcher.onDidChange((e: vscode.Uri) => this.onChange());
@@ -36,7 +35,6 @@ export default class TranslationProvider
     ): Array<vscode.CompletionItem> {
         var out: Array<vscode.CompletionItem> = [];
         var func = Helpers.parseDocumentFunction(document, position);
-
         if (func === null) {
             return out;
         }
@@ -117,6 +115,7 @@ export default class TranslationProvider
                 "echo json_encode(app('translator')->getLoader()->namespaces());",
             ).then(async function (result) {
                 var tranlationNamespaces = JSON.parse(result);
+
                 for (let i in tranlationNamespaces) {
                     tranlationNamespaces[i + '::'] = tranlationNamespaces[i];
                     delete tranlationNamespaces[i];
@@ -132,6 +131,7 @@ export default class TranslationProvider
                     relativePath: string = '',
                 ): Array<string> {
                     let path = basePath + '/' + relativePath;
+
                     let out: Array<string> = [];
                     if (
                         fs.existsSync(path) &&
